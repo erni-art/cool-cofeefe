@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA Coffee — Премиальная кофейня</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        espresso: '#120E0D',
+                        'espresso-card': '#1C1513',
+                        'espresso-light': '#261E1B',
+                        gold: '#D4AF37',
+                        'gold-light': '#E5C158',
+                        cream: '#F4ECE1',
+                        'cream-muted': '#A3998E'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #120E0D;
+            color: #F4ECE1;
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #120E0D;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3B2E2A;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+    </style>
+</head>
+<body class="bg-espresso text-cream antialiased selection:bg-gold selection:text-espresso">
+
+    <!-- Header & Navigation -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-espresso/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-full border border-gold flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-espresso transition-all duration-300">
+                    <i class="fa-solid fa-mug-hot text-lg"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif text-xl tracking-widest text-cream font-bold">AURA</span>
+                    <span class="text-[9px] tracking-[0.3em] text-gold uppercase">Coffee</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm tracking-wider uppercase font-medium">
+                <a href="#about" class="text-cream-muted hover:text-gold transition-colors">О нас</a>
+                <a href="#philosophy" class="text-cream-muted hover:text-gold transition-colors">История</a>
+                <a href="#menu" class="text-cream-muted hover:text-gold transition-colors">Меню</a>
+                <a href="#location" class="text-cream-muted hover:text-gold transition-colors">Контакты</a>
+            </nav>
+
+            <!-- Reservation CTA & Mobile Toggle -->
+            <div class="flex items-center space-x-4">
+                <button onclick="openModal()" class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 rounded-full border border-gold text-gold text-xs uppercase tracking-widest font-semibold hover:bg-gold hover:text-espresso transition-all duration-300 shadow-lg shadow-gold/5">
+                    Забронировать столик
+                </button>
+                <button id="mobileMenuBtn" class="md:hidden text-cream hover:text-gold focus:outline-none p-2">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden absolute top-20 left-0 w-full bg-espresso-card/95 backdrop-blur-xl border-b border-white/10 px-6 py-6 flex flex-col space-y-4">
+            <a href="#about" class="mobile-link text-cream-muted hover:text-gold text-sm tracking-wider uppercase">О нас</a>
+            <a href="#philosophy" class="mobile-link text-cream-muted hover:text-gold text-sm tracking-wider uppercase">История</a>
+            <a href="#menu" class="mobile-link text-cream-muted hover:text-gold text-sm tracking-wider uppercase">Меню</a>
+            <a href="#location" class="mobile-link text-cream-muted hover:text-gold text-sm tracking-wider uppercase">Контакты</a>
+            <button onclick="openModal()" class="w-full py-3 rounded-full bg-gold text-espresso text-xs uppercase tracking-widest font-bold">
+                Забронировать столик
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <!-- Background Overlay & Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1920&q=80" 
+                 alt="Aura Coffee Atmosphere" 
+                 class="w-full h-full object-cover object-center filter brightness-[0.35] scale-105 animate-[pulse_10s_ease-in-out_infinite]"
+                 onerror="this.src='https://placehold.co/1920x1080/120E0D/D4AF37?text=AURA+Coffee'">
+            <div class="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/50 to-transparent"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center mt-12">
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-gold/30 bg-gold/10 text-gold text-xs uppercase tracking-widest mb-6 animate-fade-in">
+                <i class="fa-solid fa-star text-[10px]"></i>
+                <span>Премиальная спешелти кофейня</span>
+            </div>
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-cream mb-6 leading-tight">
+                Искусство в каждой <span class="italic font-normal text-gold">капле</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-cream-muted text-base sm:text-lg mb-10 font-light leading-relaxed">
+                Погрузитесь в атмосферу подлинного кофейного мастерства. Отборные зёрна высшей категории, авторский подход и уют вне времени.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#menu" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gold text-espresso font-semibold text-xs uppercase tracking-widest hover:bg-gold-light transition-all duration-300 shadow-xl shadow-gold/20 flex items-center justify-center space-x-3">
+                    <span>Смотреть меню</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="#about" class="w-full sm:w-auto px-8 py-4 rounded-full border border-white/20 text-cream font-semibold text-xs uppercase tracking-widest hover:bg-white/5 transition-all duration-300 flex items-center justify-center">
+                    <span>Узнать больше</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll down indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 hidden md:flex flex-col items-center space-y-2 opacity-70">
+            <span class="text-[10px] tracking-widest uppercase text-cream-muted">Листайте вниз</span>
+            <div class="w-5 h-9 rounded-full border-2 border-cream-muted/40 flex items-start justify-center p-1">
+                <div class="w-1 h-2 bg-gold rounded-full animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About / Philosophy Section -->
+    <section id="about" class="py-28 px-6 bg-espresso relative">
+        <div class="max-w-7xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <span class="text-xs uppercase tracking-[0.3em] text-gold mb-3 block">Наша философия</span>
+                <h2 class="text-3xl sm:text-5xl font-bold text-cream mb-6">Создаем не просто кофе, а моменты</h2>
+                <div class="w-16 h-0.5 bg-gold mx-auto"></div>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-espresso-card p-10 rounded-2xl border border-white/5 hover:border-gold/30 transition-all duration-500 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full blur-2xl group-hover:bg-gold/10 transition-all"></div>
+                    <div class="w-14 h-14 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center text-gold text-2xl mb-8 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-cream mb-4">Зерна спешелти</h3>
+                    <p class="text-cream-muted text-sm leading-relaxed">
+                        Мы закупаем только 100% арабику класса Specialty с лучших плантаций Эфиопии, Колумбии и Гватемалы с ручным сбором.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-espresso-card p-10 rounded-2xl border border-white/5 hover:border-gold/30 transition-all duration-500 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full blur-2xl group-hover:bg-gold/10 transition-all"></div>
+                    <div class="w-14 h-14 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center text-gold text-2xl mb-8 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-mug-saucer"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-cream mb-4">Уютная атмосфера</h3>
+                    <p class="text-cream-muted text-sm leading-relaxed">
+                        Интерьер в тонах глубокого эспрессо и теплого золота создан для неспешных бесед, работы и глубокого погружения в мысли.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-espresso-card p-10 rounded-2xl border border-white/5 hover:border-gold/30 transition-all duration-500 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full blur-2xl group-hover:bg-gold/10 transition-all"></div>
+                    <div class="w-14 h-14 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center text-gold text-2xl mb-8 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-cream mb-4">Авторский подход</h3>
+                    <p class="text-cream-muted text-sm leading-relaxed">
+                        Наши бариста — мастера своего дела, постоянно экспериментирующие с сиропами ручной работы, специями и способами экстракции.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- History / Heritage Section -->
+    <section id="philosophy" class="py-28 px-6 bg-espresso-light relative overflow-hidden">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+                <span class="text-xs uppercase tracking-[0.3em] text-gold mb-3 block">Наша история</span>
+                <h2 class="text-3xl sm:text-5xl font-bold text-cream mb-6 leading-tight">Путь от страсти к идеальной чашке</h2>
+                <p class="text-cream-muted text-base leading-relaxed mb-6">
+                    Кофейня «AURA» родилась в 2019 году из страсти двух энтузиастов к чистым вкусам и правильной культуре потребления кофе. Мы начинали с небольшого корнера, а сегодня это место притяжения истинных ценителей эстетики и качества.
+                </p>
+                <p class="text-cream-muted text-base leading-relaxed mb-8">
+                    Каждое зерно обжаривается на нашем собственном производстве небольшими партиями, чтобы сохранить уникальный терруар и нотки вкуса.
+                </p>
+                <div class="grid grid-cols-2 gap-6 pt-4 border-t border-white/10">
+                    <div>
+                        <span class="text-3xl font-bold text-gold font-serif block mb-1">100%</span>
+                        <span class="text-xs text-cream-muted tracking-wider uppercase">Специалти зерно</span>
+                    </div>
+                    <div>
+                        <span class="text-3xl font-bold text-gold font-serif block mb-1">15+</span>
+                        <span class="text-xs text-cream-muted tracking-wider uppercase">Авторских рецептов</span>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-white/10 aspect-[4/3]">
+                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=80" 
+                         alt="Coffee making process" 
+                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                         onerror="this.src='https://placehold.co/800x600/120E0D/D4AF37?text=AURA+History'">
+                </div>
+                <div class="absolute -bottom-6 -right-6 w-48 h-48 bg-gold/10 rounded-full blur-3xl -z-0"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Menu Section -->
+    <section id="menu" class="py-28 px-6 bg-espresso">
+        <div class="max-w-7xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs uppercase tracking-[0.3em] text-gold mb-3 block">Наше меню</span>
+                <h2 class="text-3xl sm:text-5xl font-bold text-cream mb-6">Изысканный выбор напитков и десертов</h2>
+                <div class="w-16 h-0.5 bg-gold mx-auto"></div>
+            </div>
+
+            <!-- Category Filters -->
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-16">
+                <button onclick="filterMenu('all')" class="menu-btn active-tab px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold transition-all duration-300 bg-gold text-espresso shadow-md">
+                    Все позиции
+                </button>
+                <button onclick="filterMenu('espresso')" class="menu-btn px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold transition-all duration-300 bg-espresso-card text-cream-muted hover:text-cream hover:bg-espresso-light border border-white/5">
+                    Эспрессо
+                </button>
+                <button onclick="filterMenu('filter')" class="menu-btn px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold transition-all duration-300 bg-espresso-card text-cream-muted hover:text-cream hover:bg-espresso-light border border-white/5">
+                    Фильтр
+                </button>
+                <button onclick="filterMenu('author')" class="menu-btn px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold transition-all duration-300 bg-espresso-card text-cream-muted hover:text-cream hover:bg-espresso-light border border-white/5">
+                    Авторские напитки
+                </button>
+                <button onclick="filterMenu('desserts')" class="menu-btn px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold transition-all duration-300 bg-espresso-card text-cream-muted hover:text-cream hover:bg-espresso-light border border-white/5">
+                    Десерты
+                </button>
+            </div>
+
+            <!-- Menu Grid -->
+            <div id="menuGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Items populated dynamically via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Location & Operating Hours / Reservation Form -->
+    <section id="location" class="py-28 px-6 bg-espresso-light relative">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <!-- Left: Info & Hours -->
+            <div>
+                <span class="text-xs uppercase tracking-[0.3em] text-gold mb-3 block">Контакты и локация</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-cream mb-6">Ждем вас в гости</h2>
+                <p class="text-cream-muted text-base mb-8 leading-relaxed">
+                    Кофейня расположена в тихом и уютном историческом центре города. Здесь всегда пахнет свежей обжаркой и царит вдохновляющая тишина.
+                </p>
+
+                <!-- Contact Details -->
+                <div class="space-y-6 mb-10">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-10 h-10 rounded-lg bg-gold/10 border border-gold/20 flex items-center justify-center text-gold flex-shrink-0 mt-1">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-cream font-semibold mb-1">Адрес</h4>
+                            <p class="text-cream-muted text-sm">ул. Кофейная, 12, Премиум-квартал</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4">
+                        <div class="w-10 h-10 rounded-lg bg-gold/10 border border-gold/20 flex items-center justify-center text-gold flex-shrink-0 mt-1">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-cream font-semibold mb-1">Часы работы</h4>
+                            <p class="text-cream-muted text-sm">Пн — Пт: 08:00 – 22:00</p>
+                            <p class="text-cream-muted text-sm">Сб — Вс: 09:00 – 23:00</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4">
+                        <div class="w-10 h-10 rounded-lg bg-gold/10 border border-gold/20 flex items-center justify-center text-gold flex-shrink-0 mt-1">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-cream font-semibold mb-1">Телефон</h4>
+                            <p class="text-cream-muted text-sm">+7 (999) 123-45-67</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Simulated Map Box -->
+                <div class="rounded-2xl overflow-hidden border border-white/10 h-64 relative bg-espresso flex items-center justify-center group">
+                    <div class="absolute inset-0 bg-[radial-gradient(#3B2E2A_1px,transparent_1px)] [background-size:16px_16px] opacity-40"></div>
+                    <div class="relative z-10 text-center p-6">
+                        <div class="w-12 h-12 rounded-full bg-gold text-espresso flex items-center justify-center mx-auto mb-3 shadow-lg shadow-gold/30 animate-bounce">
+                            <i class="fa-solid fa-map-pin text-xl"></i>
+                        </div>
+                        <h4 class="text-cream font-bold text-lg mb-1">AURA Coffee House</h4>
+                        <p class="text-cream-muted text-xs">Интерактивная карта локации</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Reservation Form -->
+            <div class="bg-espresso p-8 sm:p-10 rounded-3xl border border-white/10 shadow-2xl relative">
+                <div class="absolute top-0 right-0 w-40 h-40 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+                <h3 class="text-2xl font-bold text-cream mb-2">Бронирование столика</h3>
+                <p class="text-cream-muted text-sm mb-8">Зарезервируйте лучший столик заранее для незабываемого утра или вечера.</p>
+                
+                <form id="reservationForm" onsubmit="handleReservation(event)" class="space-y-6">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-cream-muted mb-2">Ваше имя</label>
+                        <input type="text" required placeholder="Александр" 
+                               class="w-full bg-espresso-card border border-white/10 rounded-xl px-4 py-3 text-cream placeholder:text-cream-muted/40 focus:outline-none focus:border-gold transition-colors text-sm">
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-cream-muted mb-2">Телефон</label>
+                            <input type="tel" required placeholder="+7 (___) ___-__-__" 
+                                   class="w-full bg-espresso-card border border-white/10 rounded-xl px-4 py-3 text-cream placeholder:text-cream-muted/40 focus:outline-none focus:border-gold transition-colors text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-cream-muted mb-2">Количество гостей</label>
+                            <select class="w-full bg-espresso-card border border-white/10 rounded-xl px-4 py-3 text-cream focus:outline-none focus:border-gold transition-colors text-sm">
+                                <option value="1">1 гость</option>
+                                <option value="2" selected>2 гостя</option>
+                                <option value="3">3 гостя</option>
+                                <option value="4">4 гостя</option>
+                                <option value="5+">5+ гостей</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-cream-muted mb-2">Дата</label>
+                            <input type="date" required 
+                                   class="w-full bg-espresso-card border border-white/10 rounded-xl px-4 py-3 text-cream focus:outline-none focus:border-gold transition-colors text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-cream-muted mb-2">Время</label>
+                            <select class="w-full bg-espresso-card border border-white/10 rounded-xl px-4 py-3 text-cream focus:outline-none focus:border-gold transition-colors text-sm">
+                                <option value="10:00">10:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="18:00">18:00</option>
+                                <option value="20:00">20:00</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full py-4 rounded-xl bg-gold text-espresso font-bold text-xs uppercase tracking-widest hover:bg-gold-light transition-all duration-300 shadow-lg shadow-gold/20">
+                        Подтвердить бронирование
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-28 px-6 bg-espresso">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <span class="text-xs uppercase tracking-[0.3em] text-gold mb-3 block">Отзывы</span>
+                <h2 class="text-3xl sm:text-5xl font-bold text-cream mb-6">Что говорят наши гости</h2>
+                <div class="w-16 h-0.5 bg-gold mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-espresso-card p-8 rounded-2xl border border-white/5 relative">
+                    <div class="flex items-center space-x-1 text-gold text-sm mb-4">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-cream-muted text-sm mb-6 leading-relaxed">
+                        «Лучший раф на лавандовом молоке в городе! Атмосфера невероятно спокойная, идеально подходит для работы с ноутбуком или утреннего чтения.»
+                    </p>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center font-bold text-gold text-sm">
+                            ЕА
+                        </div>
+                        <div>
+                            <h4 class="text-cream font-semibold text-sm">Елена Андреева</h4>
+                            <span class="text-cream-muted text-xs">Постоянный гость</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-espresso-card p-8 rounded-2xl border border-white/5 relative">
+                    <div class="flex items-center space-x-1 text-gold text-sm mb-4">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-cream-muted text-sm mb-6 leading-relaxed">
+                        «Потрясающий спешелти кофе и внимание к деталям. Бариста настоящие профессионалы своего дела, всегда подскажут с выбором зерна под пуровер.»
+                    </p>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center font-bold text-gold text-sm">
+                            ДМ
+                        </div>
+                        <div>
+                            <h4 class="text-cream font-semibold text-sm">Дмитрий Морозов</h4>
+                            <span class="text-cream-muted text-xs">Дизайнер</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-espresso-card p-8 rounded-2xl border border-white/5 relative">
+                    <div class="flex items-center space-x-1 text-gold text-sm mb-4">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-cream-muted text-sm mb-6 leading-relaxed">
+                        «Очень стильное место с потрясающими десертами. Фирменный фисташковый круассан и эспрессо-тоник — идеальное сочетание для солнечного дня.»
+                    </p>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center font-bold text-gold text-sm">
+                            АС
+                        </div>
+                        <div>
+                            <h4 class="text-cream font-semibold text-sm">Анна Смирнова</h4>
+                            <span class="text-cream-muted text-xs">Фотограф</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-espresso-card border-t border-white/5 pt-16 pb-12 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-full border border-gold flex items-center justify-center text-gold">
+                        <i class="fa-solid fa-mug-hot text-xs"></i>
+                    </div>
+                    <span class="font-serif text-lg tracking-widest text-cream font-bold">AURA</span>
+                </div>
+                <p class="text-cream-muted text-xs leading-relaxed">
+                    Премиальная спешелти кофейня для тех, кто ценит эстетику, вкус и высокое качество каждой детали.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-cream font-semibold text-xs uppercase tracking-widest mb-4">Навигация</h4>
+                <ul class="space-y-2 text-xs text-cream-muted">
+                    <li><a href="#about" class="hover:text-gold transition-colors">О нас</a></li>
+                    <li><a href="#philosophy" class="hover:text-gold transition-colors">История</a></li>
+                    <li><a href="#menu" class="hover:text-gold transition-colors">Меню</a></li>
+                    <li><a href="#location" class="hover:text-gold transition-colors">Локация</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-cream font-semibold text-xs uppercase tracking-widest mb-4">Часы работы</h4>
+                <p class="text-xs text-cream-muted mb-1">Пн — Пт: 08:00 – 22:00</p>
+                <p class="text-xs text-cream-muted">Сб — Вс: 09:00 – 23:00</p>
+            </div>
+
+            <div>
+                <h4 class="text-cream font-semibold text-xs uppercase tracking-widest mb-4">Социальные сети</h4>
+                <div class="flex items-center space-x-3">
+                    <a href="#" class="w-10 h-10 rounded-full bg-espresso border border-white/10 flex items-center justify-center text-cream hover:text-gold hover:border-gold transition-all">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-espresso border border-white/10 flex items-center justify-center text-cream hover:text-gold hover:border-gold transition-all">
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-espresso border border-white/10 flex items-center justify-center text-cream hover:text-gold hover:border-gold transition-all">
+                        <i class="fa-brands fa-vk"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-cream-muted">
+            <p>&copy; 2026 AURA Coffee. Все права защищены.</p>
+            <p class="mt-2 sm:mt-0">С любовью к кофе и деталям.</p>
+        </div>
+    </footer>
+
+    <!-- Modal / Reservation Popup -->
+    <div id="reservationModal" class="fixed inset-0 z-50 flex items-center justify-center bg-espresso/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 px-4">
+        <div class="bg-espresso-card border border-white/10 w-full max-w-lg rounded-3xl p-8 relative transform scale-95 transition-transform duration-300 shadow-2xl" id="modalContent">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-cream-muted hover:text-cream text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modalBody">
+                <h3 class="text-2xl font-bold text-cream mb-2">Бронирование столика</h3>
+                <p class="text-cream-muted text-sm mb-6">Заполните данные, и наш менеджер свяжется с вами для подтверждения.</p>
+                <form onsubmit="handleModalSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-cream-muted mb-2">Ваше имя</label>
+                        <input type="text" required placeholder="Александр" 
+                               class="w-full bg-espresso border border-white/10 rounded-xl px-4 py-3 text-cream placeholder:text-cream-muted/40 focus:outline-none focus:border-gold transition-colors text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-cream-muted mb-2">Телефон</label>
+                        <input type="tel" required placeholder="+7 (___) ___-__-__" 
+                               class="w-full bg-espresso border border-white/10 rounded-xl px-4 py-3 text-cream placeholder:text-cream-muted/40 focus:outline-none focus:border-gold transition-colors text-sm">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-cream-muted mb-2">Дата</label>
+                            <input type="date" required 
+                                   class="w-full bg-espresso border border-white/10 rounded-xl px-4 py-3 text-cream focus:outline-none focus:border-gold transition-colors text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-cream-muted mb-2">Время</label>
+                            <select class="w-full bg-espresso border border-white/10 rounded-xl px-4 py-3 text-cream focus:outline-none focus:border-gold transition-colors text-sm">
+                                <option value="10:00">10:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="18:00">18:00</option>
+                                <option value="20:00">20:00</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full py-4 rounded-xl bg-gold text-espresso font-bold text-xs uppercase tracking-widest hover:bg-gold-light transition-all duration-300 mt-2">
+                        Забронировать
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-espresso-card border border-gold/40 text-cream px-6 py-4 rounded-2xl shadow-2xl transform translate-y-32 opacity-0 transition-all duration-300 flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-full bg-gold/20 text-gold flex items-center justify-center flex-shrink-0">
+            <i class="fa-solid fa-check text-xs"></i>
+        </div>
+        <div>
+            <h4 class="text-xs uppercase tracking-wider font-bold text-gold">Успешно!</h4>
+            <p id="toastText" class="text-xs text-cream-muted">Столик успешно забронирован.</p>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Menu Items Dataset
+        const menuItems = [
+            {
+                id: 1,
+                category: 'espresso',
+                name: 'Эспрессо Допио',
+                composition: 'Двойная порция спешелти арабики, яркая цитрусовая кислинка, нотки какао.',
+                price: '280 ₽',
+                image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: 2,
+                category: 'espresso',
+                name: 'Капучино Классик',
+                composition: 'Эспрессо, бархатистая молочная пена, сбалансированный сливочный вкус.',
+                price: '350 ₽',
+                image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: 3,
+                category: 'filter',
+                name: 'Пуровер V60 Эфиопия',
+                composition: 'Альтернативный метод заваривания. Цветочные нотки, бергамот, чайное тело.',
+                price: '390 ₽',
+                image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: 4,
+                category: 'filter',
+                name: 'Кемекс Колумбия',
+                composition: 'Чистый чашечный вкус, нотки молочного шоколада и спелых красных ягод.',
+                price: '420 ₽',
+                image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: 5,
+                category: 'author',
+                name: 'Лавандовый Раф',
+                composition: 'Эспрессо, сливки 10%, натуральный лавандовый сироп ручной работы, цветы лаванды.',
+                price: '450 ₽',
+                image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: 6,
+                category: 'author',
+                name: 'Эспрессо-Тоник Цитрус',
+                composition: 'Освежающий лонг-дринк на основе тоника премиум класса, двойного эспрессо и цедры апельсина.',
+                price: '430 ₽',
+                image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: 7,
+                category: 'desserts',
+                name: 'Фисташковый Круассан',
+                composition: 'Слоеное хрустящее тесто, заварной фисташковый крем, дробленые орехи.',
+                price: '360 ₽',
+                image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: 8,
+                category: 'desserts',
+                name: 'Чизкейк Нью-Йорк',
+                composition: 'Нежный сливочный сыр на песочной основе с ванильным акцентом.',
+                price: '410 ₽',
+                image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=600&q=80'
+            }
+        ];
+
+        // Favorite items tracker
+        let favorites = JSON.parse(localStorage.getItem('aura_favorites')) || [];
+
+        // Render Menu Items
+        function renderMenu(category = 'all') {
+            const grid = document.getElementById('menuGrid');
+            grid.innerHTML = '';
+
+            const filtered = category === 'all' 
+                ? menuItems 
+                : menuItems.filter(item => item.category === category);
+
+            filtered.forEach(item => {
+                const isFav = favorites.includes(item.id);
+                const card = document.createElement('div');
+                card.className = 'bg-espresso-card rounded-2xl overflow-hidden border border-white/5 hover:border-gold/30 transition-all duration-300 flex flex-col justify-between group';
+                card.innerHTML = `
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/120E0D/D4AF37?text=AURA+Coffee'">
+                        <button onclick="toggleFavorite(${item.id})" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-espresso/70 backdrop-blur-md flex items-center justify-center text-xs text-cream hover:text-gold transition-colors border border-white/10">
+                            <i class="${isFav ? 'fa-solid text-gold' : 'fa-regular'} fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-xl font-bold text-cream">${item.name}</h3>
+                                <span class="text-gold font-serif font-bold text-lg">${item.price}</span>
+                            </div>
+                            <p class="text-cream-muted text-xs leading-relaxed mb-6">${item.composition}</p>
+                        </div>
+                        <button onclick="orderItem('${item.name}')" class="w-full py-2.5 rounded-xl border border-gold/40 text-gold text-xs uppercase tracking-widest font-semibold hover:bg-gold hover:text-espresso transition-all duration-300">
+                            Добавить в заказ
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter tabs logic
+        function filterMenu(category) {
+            document.querySelectorAll('.menu-btn').forEach(btn => {
+                btn.classList.remove('bg-gold', 'text-espresso', 'shadow-md');
+                btn.classList.add('bg-espresso-card', 'text-cream-muted', 'border', 'border-white/5');
+            });
+            event.currentTarget.classList.remove('bg-espresso-card', 'text-cream-muted', 'border', 'border-white/5');
+            event.currentTarget.classList.add('bg-gold', 'text-espresso', 'shadow-md');
+            renderMenu(category);
+        }
+
+        // Toggle Favorite
+        function toggleFavorite(id) {
+            if (favorites.includes(id)) {
+                favorites = favorites.filter(favId => favId !== id);
+                showToast('Успешно', 'Позиция удалена из избранного');
+            } else {
+                favorites.push(id);
+                showToast('Успешно', 'Позиция добавлена в избранное');
+            }
+            localStorage.setItem('aura_favorites', JSON.stringify(favorites));
+            // Re-render active filter
+            const activeBtn = document.querySelector('.menu-btn.bg-gold');
+            // simple check or just re-render current state
+            renderMenu('all');
+        }
+
+        // Order Item Action
+        function orderItem(name) {
+            showToast('Заказ принят', `"${name}" добавлен в ваш предзаказ. Бариста уже готовится!`);
+        }
+
+        // Modal Controls
+        function openModal() {
+            const modal = document.getElementById('reservationModal');
+            const content = document.getElementById('modalContent');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('reservationModal');
+            const content = document.getElementById('modalContent');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+        }
+
+        // Reservation Form Handling
+        function handleReservation(e) {
+            e.preventDefault();
+            showToast('Бронь подтверждена!', 'Столик успешно забронирован. Мы ждем вас!');
+            e.target.reset();
+        }
+
+        function handleModalSubmit(e) {
+            e.preventDefault();
+            closeModal();
+            showToast('Бронь подтверждена!', 'Столик успешно забронирован через модальное окно.');
+            e.target.reset();
+        }
+
+        // Toast Notification System
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastText').innerText = message;
+            toast.querySelector('h4').innerText = title;
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 4000);
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Sticky Navbar Glassmorphism effect on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-espresso/95', 'shadow-xl');
+            } else {
+                navbar.classList.add('bg-espresso/80');
+            }
+        });
+
+        // Initial Menu Render
+        window.onload = () => {
+            renderMenu('all');
+        };
+    </script>
+</body>
+</html>
